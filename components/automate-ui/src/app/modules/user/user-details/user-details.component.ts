@@ -74,9 +74,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         this.isAdminView = !data.isNonAdmin;
 
         if (this.isAdminView) {
-          this.layoutFacade.showSettingsSidebar();
+          this.layoutFacade.showSidebar('settings');
         } else {
-          this.layoutFacade.showUserProfileSidebar();
+          this.layoutFacade.showSidebar('profile');
         }
 
         // Update the forms once this info has come in

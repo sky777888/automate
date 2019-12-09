@@ -43,7 +43,7 @@ export class PolicyListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.layoutFacade.showSettingsSidebar();
+    this.layoutFacade.showSidebar('settings');
     this.store.dispatch(new GetPolicies());
   }
 

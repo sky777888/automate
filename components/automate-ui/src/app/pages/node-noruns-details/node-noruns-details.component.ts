@@ -20,7 +20,7 @@ export class NodeNoRunsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.layoutFacade.showInfastructureSidebar();
+    this.layoutFacade.showSidebar('infrastructure');
     this.nodeId = this.getRouteParam('node-id');
     this.route.data.subscribe((data: { node: Node }) => {
         this.node = data.node;

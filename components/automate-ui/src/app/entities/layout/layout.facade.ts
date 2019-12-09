@@ -8,8 +8,8 @@ import { Notification, Type } from 'app/entities/notifications/notification.mode
 
 import * as fromLayout from './layout.reducer';
 import { MenuItemGroup } from './layout.model';
-import { sidebarMenuGroups, showPageLoading } from './layout.selectors';
-import { ShowPageLoading, UpdateSidebarMenuGroups } from './layout.actions';
+import { sidebar, showPageLoading } from './layout.selectors';
+import { ShowPageLoading } from './layout.actions';
 
 // Important! These must match components/automate-ui/src/styles/_variables.scss
 enum Height {
@@ -23,17 +23,17 @@ enum Height {
 export class LayoutFacadeService {
   headerHeight = '70px';
   contentHeight = `calc(100% - ${this.headerHeight})`;
-  menuGroups$: Observable<MenuItemGroup[]>;
+  sidebar$: Observable<MenuItemGroup[]>;
   showPageLoading$: Observable<boolean>;
   showLicenseNotification = false;
   showHeader = true;
-  showSidebar = true;
+  enableSidebar = true;
 
   constructor(
     private store: Store<fromLayout.LayoutEntityState>,
     private layoutSidebarService: LayoutSidebarService
   ) {
-    this.menuGroups$ = store.select(sidebarMenuGroups);
+    this.sidebar$ = store.select(sidebar);
     this.showPageLoading$ = store.select(showPageLoading);
 
     store.select(notificationState).subscribe(
@@ -42,26 +42,26 @@ export class LayoutFacadeService {
           notifications &&  notifications.some(n => n.type === Type.license);
         this.updateContentHeight(
           this.showLicenseNotification ? Height.Banner : Height.Navigation);
-      });
+    });
   }
 
   hasGlobalNotifications(): boolean {
     return this.headerHeight === Height.Banner;
   }
 
-  ShowPageLoading(showLoading: boolean): void {
-    this.store.dispatch(new ShowPageLoading(showLoading));
+  ShowPageLoading(showLoading: boolean) {
+    this.store.dispatch( new ShowPageLoading(showLoading));
   }
 
-  showFullPage(): void {
+  showFullPage() {
     this.contentHeight = '100%';
-    this.showSidebar = false;
+    this.enableSidebar = false;
     this.showHeader = false;
   }
 
   hideFullPage(): void {
     this.updateContentHeight(this.headerHeight);
-    this.showSidebar = true;
+    this.enableSidebar = true;
     this.showHeader = true;
   }
 
@@ -70,39 +70,7 @@ export class LayoutFacadeService {
     this.contentHeight = `calc(100% - ${this.headerHeight})`;
   }
 
-  showDashboardsSidebar(): void {
-    this.store.dispatch(new UpdateSidebarMenuGroups(
-      this.layoutSidebarService.getDashboardsSidebar()
-    ));
-  }
-
-  showApplicationsSidebar(): void {
-    this.store.dispatch(new UpdateSidebarMenuGroups(
-      this.layoutSidebarService.getApplicationsSidebar()
-    ));
-  }
-
-  showInfastructureSidebar(): void {
-    this.store.dispatch(new UpdateSidebarMenuGroups(
-      this.layoutSidebarService.getInfastructureSidebar()
-    ));
-  }
-
-  showComplianceSidebar(): void {
-    this.store.dispatch(new UpdateSidebarMenuGroups(
-      this.layoutSidebarService.getComplianceSidebar()
-    ));
-  }
-
-  showSettingsSidebar(): void {
-    this.store.dispatch(new UpdateSidebarMenuGroups(
-      this.layoutSidebarService.getSettingsSidebar()
-    ));
-  }
-
-  showUserProfileSidebar(): void {
-    this.store.dispatch(new UpdateSidebarMenuGroups(
-      this.layoutSidebarService.getUserProfileSidebar()
-    ));
+  showSidebar(sidebarName: string) {
+    this.layoutSidebarService.updateSidebars(sidebarName);
   }
 }
