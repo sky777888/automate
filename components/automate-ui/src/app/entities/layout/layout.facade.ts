@@ -17,6 +17,15 @@ enum Height {
   Banner = '110px'
 }
 
+export enum Sidebar {
+  Dashboards = 'dashboards',
+  Applications = 'applications',
+  Infrastructure = 'infrastructure',
+  Compliance = 'compliance',
+  Settings = 'settings',
+  Profile = 'profile'
+}
+
 @Injectable({
   providedIn: 'root'
 })

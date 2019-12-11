@@ -6,7 +6,7 @@ import { combineLatest, Subject } from 'rxjs';
 import { filter, pluck, takeUntil } from 'rxjs/operators';
 import { identity, isNil } from 'lodash/fp';
 
-import { LayoutFacadeService } from 'app/entities/layout/layout.facade';
+import { LayoutFacadeService, Sidebar } from 'app/entities/layout/layout.facade';
 import { NgrxStateAtom } from 'app/ngrx.reducers';
 import { ChefValidators } from 'app/helpers/auth/validator';
 import { routeParams } from 'app/route.selectors';
@@ -74,9 +74,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         this.isAdminView = !data.isNonAdmin;
 
         if (this.isAdminView) {
-          this.layoutFacade.showSidebar('settings');
+          this.layoutFacade.showSidebar(Sidebar.Settings);
         } else {
-          this.layoutFacade.showSidebar('profile');
+          this.layoutFacade.showSidebar(Sidebar.Profile);
         }
 
         // Update the forms once this info has come in

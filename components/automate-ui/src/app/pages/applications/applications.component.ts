@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeatureFlagsService } from 'app/services/feature-flags/feature-flags.service';
-import { LayoutFacadeService } from 'app/entities/layout/layout.facade';
+import { LayoutFacadeService, Sidebar } from 'app/entities/layout/layout.facade';
 
 @Component({
   selector: 'app-applications-dashboard',
@@ -17,7 +17,7 @@ export class ApplicationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.layoutFacade.showSidebar('applications');
+    this.layoutFacade.showSidebar(Sidebar.Applications);
     this.applicationsFeatureFlagOn = this.featureFlagsService.getFeatureStatus('applications');
   }
 }

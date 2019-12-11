@@ -4,7 +4,7 @@ import { RulesService } from 'app/services/rules/rules.service';
 
 import { ActivatedRoute } from '@angular/router';
 
-import { LayoutFacadeService } from 'app/entities/layout/layout.facade';
+import { LayoutFacadeService, Sidebar } from 'app/entities/layout/layout.facade';
 import { FeatureFlagsService } from '../../services/feature-flags/feature-flags.service';
 
 enum UrlTestState {
@@ -80,7 +80,7 @@ export class NotificationFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.layoutFacade.showSidebar('settings');
+    this.layoutFacade.showSidebar(Sidebar.Settings);
     const alertKeys = this.getAlertTypeKeys();
     this.alertOptions = alertKeys.map(key => {
       const opt = { value: key, viewValue: key };
