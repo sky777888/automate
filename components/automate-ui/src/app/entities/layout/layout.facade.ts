@@ -30,7 +30,7 @@ export enum Sidebar {
   providedIn: 'root'
 })
 export class LayoutFacadeService {
-  headerHeight = '70px';
+  headerHeight: string = Height.Navigation;
   contentHeight = `calc(100% - ${this.headerHeight})`;
   sidebar$: Observable<MenuItemGroup[]>;
   showPageLoading$: Observable<boolean>;
